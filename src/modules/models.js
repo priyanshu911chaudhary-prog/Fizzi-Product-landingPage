@@ -22,11 +22,11 @@ export const cans = [];
 function loadLabelTextures() {
     const loader = new THREE.TextureLoader();
     const paths = [
-        '../src/assets/textures/lemon-lime.png',
-        '../src/assets/textures/cherry.png',
-        '../src/assets/textures/grape.png',
-        '../src/assets/textures/strawberry.png',
-        '../src/assets/textures/watermelon.png'
+        '/textures/lemon-lime.png',
+        '/textures/cherry.png',
+        '/textures/grape.png',
+        '/textures/strawberry.png',
+        '/textures/watermelon.png'
     ];
 
     const promises = paths.map(path => new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ function loadCanModel() {
         gltfLoader.setDRACOLoader(dracoLoader);
 
         gltfLoader.load(
-            '../src/assets/models/Soda-can.gltf',
+            '/models/Soda-can.gltf',
             (gltf) => resolve(gltf.scene),
             undefined,
             (error) => {
