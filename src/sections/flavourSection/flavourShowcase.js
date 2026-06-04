@@ -52,19 +52,19 @@ export function createFlavorShowcase(cans) {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const FLAVOR_MULTIPLIERS = {
-        0: 0.72,  // Lemon
-        1: 1.0,   // Cherry
-        2: 0.65,  // Grape
-        3: 0.85,  // Strawberry
-        4: 0.80   // Watermelon
+        0: 1.0,  // Lemon
+        1: 1.3,   // Cherry
+        2: 1.0,  // Grape
+        3: 1.0,  // Strawberry
+        4: 1.0   // Watermelon
     };
 
     const FLAVOR_ENV_MULTIPLIERS = {
-        0: 0.8,   // Lemon
+        0: 1.0,   // Lemon
         1: 1.0,   // Cherry
-        2: 0.7,   // Grape
-        3: 0.9,   // Strawberry
-        4: 0.85   // Watermelon
+        2: 1.0,   // Grape
+        3: 1.0,   // Strawberry
+        4: 1.0   // Watermelon
     };
 
     function setTexture(index) {
@@ -84,8 +84,8 @@ export function createFlavorShowcase(cans) {
 
         heroCan.traverse((child) => {
             if (child.isMesh && child.material) {
-                child.material.color.setScalar(1.5 * mult);
-                child.material.envMapIntensity = 1.2 * envMult;
+                child.material.color.setScalar(0.76 * mult);
+                child.material.envMapIntensity = 0.4 * envMult;
                 child.material.needsUpdate = true;
             }
         });

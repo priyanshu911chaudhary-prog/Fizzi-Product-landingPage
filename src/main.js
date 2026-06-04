@@ -195,7 +195,6 @@ function updateConnectors() {
 }
 
 window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
     updateConnectors();
 });
 
