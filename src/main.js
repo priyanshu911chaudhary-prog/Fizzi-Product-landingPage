@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { gsap } from "gsap";
+import { GUI } from 'lil-gui';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scene, camera, renderer } from './modules/scene.js';
 import { setupLights } from './modules/lights.js';
@@ -16,6 +17,12 @@ import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
+
+// Force the browser to start at the top on reload so GSAP doesn't snap the lights
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
 
 /* ══════════════════════════════════════
    LOADING SCREEN
@@ -82,7 +89,8 @@ THREE.ColorManagement.enabled = true;
    SYNC SETUP (instant — no loading)
    ══════════════════════════════════════ */
 
-const { cherryLight } = setupLights();
+// ── NEW: Grab all lights so the GUI can control them ──
+const { hemisphereLight, spotLight, cherryLight } = setupLights();
 const composer = setupPostProcessing();
 
 /* Start render loop immediately (shows loading screen over blank scene) */
@@ -230,7 +238,48 @@ async function init() {
             ease: "power2.out"
         }, "-=0.5");
 
+        // Now play intro animation — cans will fly in from off-screen
         introAnimation.play();
+
+        /* ══════════════════════════════════════
+           DEBUG GUI PANEL (For finding exact coordinates)
+           ══════════════════════════════════════ */
+        /* ══════════════════════════════════════
+           DEBUG GUI PANEL (For finding exact coordinates & lighting)
+           ══════════════════════════════════════ */
+        // const gui = new GUI({ title: 'Scene Tweaks' });
+
+        // // ── 1. LIGHTING & REFLECTION CONTROLS ──
+        // const lightFolder = gui.addFolder('Lighting & Environment');
+        
+        // // .listen() allows the sliders to update in real-time as GSAP scrolls!
+        // lightFolder.add(renderer, 'toneMappingExposure', 0, 5, 0.01).name('Global Exposure').listen();
+        // lightFolder.add(scene, 'environmentIntensity', 0, 3, 0.01).name('HDRI Reflection').listen();
+        // lightFolder.add(hemisphereLight, 'intensity', 0, 15, 0.1).name('Ambient Light');
+        // lightFolder.add(spotLight, 'intensity', 0, 500, 1).name('Main Studio Light');
+        // lightFolder.add(cherryLight, 'intensity', 0, 300, 1).name('Hero Spotlight').listen();
+        
+        // lightFolder.add(cherryLight.position, 'x', -10, 10, 0.1).name('Hero Light X').listen();
+        // lightFolder.add(cherryLight.position, 'y', -10, 10, 0.1).name('Hero Light Y').listen();
+        // lightFolder.add(cherryLight.position, 'z', -2, 10, 0.1).name('Hero Light Z').listen();
+        
+
+        // // ── 2. CAN POSITION CONTROLS ──
+        // loadedCans.forEach((wrapper, index) => {
+        //     const can = wrapper.children[0]; // This is the mesh GSAP animates
+        //     const folder = gui.addFolder(`Can ${index + 1} ${index === 1 ? '(Hero)' : ''}`);
+            
+        //     folder.add(can.position, 'x', -3, 3, 0.01).name('Pos X').listen();
+        //     folder.add(can.position, 'y', -3, 3, 0.01).name('Pos Y').listen();
+        //     folder.add(can.position, 'z', -2, 5, 0.01).name('Pos Z').listen();
+            
+        //     folder.add(can.rotation, 'x', -Math.PI*2, Math.PI*2, 0.01).name('Rot X').listen();
+        //     folder.add(can.rotation, 'y', -Math.PI*2, Math.PI*2, 0.01).name('Rot Y').listen();
+        //     folder.add(can.rotation, 'z', -Math.PI*2, Math.PI*2, 0.01).name('Rot Z').listen();
+            
+        //     folder.add(can.scale, 'x', 0.1, 3, 0.01).name('Scale').onChange(v => can.scale.setScalar(v)).listen();
+        //     folder.close(); 
+        // });
 
         // Init scroll-based animations
         // initLogoAnimation();

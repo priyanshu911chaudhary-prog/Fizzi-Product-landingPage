@@ -18,8 +18,10 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.toneMapping = THREE.ReinhardToneMapping;
-renderer.toneMappingExposure = 2.0;
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping; 
+// ── FIX: Increased from 1.25 to 1.8 to brighten the whole scene ──
+renderer.toneMappingExposure = 1.8; 
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;

@@ -10,7 +10,10 @@ export function setupEnvironment(onProgress) {
             (texture) => {
                 texture.mapping = THREE.EquirectangularReflectionMapping;
                 scene.environment = texture;
-                scene.environmentIntensity = 0.8;
+                
+                // ── INITIAL VALUE FROM SCREENSHOT 1 ──
+                scene.environmentIntensity = 0.91; 
+                
                 scene.backgroundBlurriness = 0;
                 resolve(texture);
             },

@@ -21,6 +21,7 @@ export function createPlanes(textures) {
         metalness: 0,
         clearcoat: 0,
         side: THREE.DoubleSide,
+        transparent: true, // ── FIX: Add this so it compiles correctly on load
     });
 
     const planeMaterial2 = new THREE.MeshPhysicalMaterial({
@@ -30,6 +31,7 @@ export function createPlanes(textures) {
         roughnessMap: roughMap,
         clearcoat: 0,
         side: THREE.DoubleSide,
+        transparent: true, // ── FIX: Add this so it compiles correctly on load
     });
 
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);

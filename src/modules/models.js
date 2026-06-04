@@ -99,13 +99,15 @@ export async function loadModels(cherryLight) {
     const totalCans = 5;
     const offset = (totalCans - 1) * separation / 2;
     const canMaterialSettings = {
-        metalness: 0.7,
-        roughness: 0.62,
-        clearcoat: 0.08,
-        clearcoatRoughness: 0.45,
-        envMapIntensity: 0.18,
-        specularIntensity: 0.55,
-        specularColor: new THREE.Color(0xf7ede3)
+        metalness: 0.75,
+        roughness: 0.4,
+        clearcoat: 0.8,
+        clearcoatRoughness: 0.1,
+        envMapIntensity: 1.5,
+        specularIntensity: 1.0,
+        specularColor: new THREE.Color(0xffffff),
+        transparent: true,
+        
     };
 
     for (let i = 0; i < totalCans; i++) {

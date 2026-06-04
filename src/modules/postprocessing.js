@@ -8,13 +8,14 @@ export function setupPostProcessing() {
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
+    // ── REALISM TWEAK: Macro Lens Depth of Field ──
     const bokehPass = new BokehPass(
         scene,
         camera,
         {
-            focus: 3,
-            aperture: 0.00005,
-            maxblur: 0.001
+            focus: 3.2,       // Dialed in to hit the hero can perfectly
+            aperture: 0.0002, // Wider aperture for a more noticeable blur
+            maxblur: 0.005
         }
     );
     composer.addPass(bokehPass);
