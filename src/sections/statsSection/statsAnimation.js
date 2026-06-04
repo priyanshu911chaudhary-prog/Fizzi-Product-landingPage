@@ -3,20 +3,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Connector → Card pairings ─── */
+/* ─── Card pairings ─── */
 const SEQUENCE = [
     {
-        connector: ".connector-sugar",
         card: ".stat-sugar",
         fromX: -220, fromY: 80, rotate: -12,
     },
     {
-        connector: ".connector-artificial",
         card: ".stat-artificial",
         fromX: 220, fromY: 80, rotate: 12,
     },
     {
-        connector: ".connector-probiotic",
         card: ".stat-probiotic",
         fromX: -220, fromY: -60, rotate: -8,
     },
@@ -36,11 +33,6 @@ export function createStatsAnimation() {
             SEQUENCE.forEach(({ card }) => {
                 gsap.set(card, { x: 0, y: 0, rotateZ: 0, scale: 1, opacity: 1, filter: "blur(0px)" });
             });
-            gsap.set([".connector-sugar", ".connector-probiotic", ".connector-artificial"], { opacity: 1 });
-            document.querySelectorAll(".line-horizontal, .line-diagonal").forEach(line => {
-                line.style.clipPath = "none";
-            });
-            gsap.set(".connector-joint", { scale: 1, opacity: 1 });
             gsap.set(".stat-number", { scale: 1, opacity: 1 });
             gsap.set(".stat-label", { opacity: 1, y: 0 });
         });
@@ -64,22 +56,6 @@ export function createStatsAnimation() {
                 });
             });
 
-            /* Connectors: hidden */
-            gsap.set([".connector-sugar", ".connector-probiotic", ".connector-artificial"], {
-                opacity: 0,
-            });
-
-            /* Lines: clipped to 0 width (draw-on start) */
-            document.querySelectorAll(".line-horizontal, .line-diagonal").forEach(line => {
-                line.style.clipPath = "inset(0 100% 0 0)";
-            });
-
-            /* Joints: scaled to 0 */
-            gsap.set(".connector-joint", {
-                scale: 0,
-                opacity: 0,
-                transformOrigin: "center center",
-            });
 
             /* Numbers & labels: hidden */
             gsap.set(".stat-number", { scale: 0.5, opacity: 0 });
@@ -102,56 +78,15 @@ export function createStatsAnimation() {
                 ease: "none",
             }, 0);
 
-            /* Phase 2+3: For each connector → draw lines → pop joint → then reveal card */
-            SEQUENCE.forEach(({ connector, card }, i) => {
-                const connectorEl = document.querySelector(connector);
-                if (!connectorEl) return;
-
-                const diagonal = connectorEl.querySelector(".line-diagonal");
-                const horizontal = connectorEl.querySelector(".line-horizontal");
-                const joint = connectorEl.querySelector(".connector-joint");
+            /* Phase 2: For each card → fly in */
+            SEQUENCE.forEach(({ card }, i) => {
                 const numberEl = document.querySelector(`${card} .stat-number`);
                 const labelEl = document.querySelector(`${card} .stat-label`);
 
                 const baseDelay = 0.08 + i * 0.22;
-
-                /* Step 1: Show connector container */
-                tl.to(connectorEl, {
-                    opacity: 1,
-                    duration: 0.01,
-                }, baseDelay);
-
-                /* Step 2: Draw horizontal line */
-                if (horizontal) {
-                    tl.to(horizontal, {
-                        clipPath: "inset(0 0% 0 0)",
-                        duration: 0.12,
-                        ease: "power2.inOut",
-                    }, baseDelay + 0.01);
-                }
-
-                /* Step 3: Draw diagonal line */
-                if (diagonal) {
-                    tl.to(diagonal, {
-                        clipPath: "inset(0 0% 0 0)",
-                        duration: 0.10,
-                        ease: "power2.inOut",
-                    }, baseDelay + 0.08);
-                }
-
-                /* Step 4: Pop connector joint */
-                if (joint) {
-                    tl.to(joint, {
-                        scale: 1,
-                        opacity: 1,
-                        duration: 0.06,
-                        ease: "back.out(4)",
-                    }, baseDelay + 0.14);
-                }
-
-                /* Step 5: Card flies in (AFTER connector is fully drawn) */
                 const cardDelay = baseDelay + 0.16;
 
+                /* Step 1: Card flies in */
                 tl.to(card, {
                     x: 0,
                     y: 0,
@@ -163,7 +98,7 @@ export function createStatsAnimation() {
                     ease: "power3.out",
                 }, cardDelay);
 
-                /* Step 6: Number pops in */
+                /* Step 2: Number pops in */
                 if (numberEl) {
                     tl.to(numberEl, {
                         scale: 1,
@@ -173,7 +108,7 @@ export function createStatsAnimation() {
                     }, cardDelay + 0.04);
                 }
 
-                /* Step 7: Label fades in */
+                /* Step 3: Label fades in */
                 if (labelEl) {
                     tl.to(labelEl, {
                         opacity: 1,

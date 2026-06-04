@@ -243,13 +243,6 @@ html.lenis body {
 }
 
 /* ─── REPLACE FROM HERE ─── */
-.stat-connectors {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 15;
-}
-
 .stats-overlay {
   position: fixed;
   inset: 0;
@@ -276,179 +269,6 @@ html.lenis body {
 }
 /* ─── TO HERE ─── */
 
-.connector-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.connector {
-  --line-thickness: 5px;
-
-  position: absolute;
-  filter: url(#connectorGlow);
-}
-
-.line-horizontal,
-.line-diagonal {
-  --line-thickness: 5px;
-
-  position: absolute;
-  height: var(--line-thickness);
-  border-radius: 999px;
-  transform-origin: left center;
-
-  background: linear-gradient(180deg,
-      #ffd0d0 0%,
-      #ff5c5c 22%,
-      #ff1a1a 48%,
-      #d40022 78%,
-      #8f0014 100%);
-
-  box-shadow:
-    0 0 6px rgba(255, 60, 60, 0.95),
-    0 0 18px rgba(255, 30, 30, 0.55),
-    0 0 32px rgba(255, 20, 20, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -1.5px 2px rgba(80, 0, 10, 0.55);
-
-  overflow: hidden;
-  will-change: clip-path;
-}
-
-.line-horizontal::before,
-.line-diagonal::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.15) 18%,
-      rgba(255, 255, 255, 0.55) 42%,
-      rgba(255, 255, 255, 0.2) 58%,
-      rgba(255, 255, 255, 0) 82%);
-  pointer-events: none;
-}
-
-.line-horizontal::after,
-.line-diagonal::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 1px;
-  height: 38%;
-  border-radius: inherit;
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.75) 0%,
-      rgba(255, 255, 255, 0.12) 100%);
-  pointer-events: none;
-}
-
-.connector-joint {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 11px;
-  height: 11px;
-  margin: calc(var(--line-thickness) / -2);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%,
-      #fff 0%,
-      #ff8a8a 28%,
-      #ff1a1a 55%,
-      #9a0018 100%);
-  box-shadow:
-    0 0 8px rgba(255, 50, 50, 0.9),
-    0 0 16px rgba(255, 30, 30, 0.5),
-    inset 0 -2px 4px rgba(100, 0, 15, 0.45);
-  z-index: 2;
-  will-change: transform, opacity;
-}
-
-.connector-probiotic .connector-joint {
-  left: 28px;
-  /* nudge to match line start */
-  top: auto;
-  bottom: 48px;
-  /* mirror .line-diagonal offsets */
-}
-
-.connector-artificial .connector-joint {
-  left: 250px;
-  /* nudge to match line start */
-  top: auto;
-  bottom: 78px;
-  /* mirror .line-diagonal offsets */
-}
-
-
-.connector-sugar {
-
-  left: 310px;
-  top: 292px;
-}
-
-.connector-sugar .line-diagonal {
-
-  width: 109px;
-
-  transform: rotate(75deg);
-}
-
-.connector-sugar .line-horizontal {
-
-  width: 220px;
-
-  top: 105px;
-  left: 27px;
-}
-
-.connector-probiotic {
-
-  left: 260px;
-  top: 632px;
-}
-
-.connector-probiotic .line-diagonal {
-
-  width: 73px;
-  left: 30px;
-  bottom: 48px;
-
-  transform: rotate(-63deg);
-}
-
-.connector-probiotic .line-horizontal {
-
-  width: 230px;
-
-  top: -115px;
-  left: 62px;
-}
-
-.connector-artificial {
-
-  right: 550px;
-  top: 620px;
-}
-
-.connector-artificial .line-horizontal {
-
-  width: 225px;
-}
-
-.connector-artificial .line-diagonal {
-
-  width: 85px;
-
-  left: 223px;
-
-  transform: rotate(-70deg);
-}
 
 .flavors-section {
   height: 100vh;
@@ -594,8 +414,6 @@ html.lenis body {
   .flavor-heading .number { font-size: 5rem; }
 
   /* ── Stats Layout (Centered Can, Cards Top/Bottom) ── */
-  .stat-connectors { display: none; }
-
   .stats-overlay {
     display: block; /* Remove flexbox so we can use absolute positioning safely */
   }
