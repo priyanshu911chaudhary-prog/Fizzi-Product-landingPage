@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fizzi</title>
+
+  <link rel="stylesheet" href="./src/style.css">
+
+  <style>
+    @font-face {
+      font-family: "Titan-One";
+      src: url("./src/assets/fonts/TitanOne-Regular.ttf") format("truetype");
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <span class="loading-title">FIZZI</span>
+      <div class="loading-bar-track">
+        <div id="loading-progress" class="loading-bar-fill"></div>
+      </div>
+      <span id="loading-percent" class="loading-percent">0%</span>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-bar"></div>
+
+  <!-- Three.js Canvas -->
+  <section class="hero">
+    <div class="scroll-indicator">
+      <span class="scroll-down-text">SCROLL</span>
+      <div class="scroll-arrow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </svg>
+      </div>
+    </div>
+    <canvas id="canvas" class="fixed inset-0 w-full h-screen bg-black"></canvas>
+  </section>
+
+  <section class="showcase"></section>
+
+  <div class="stats-section">
+
+    <div class="stats-overlay">
+      <div class="stats-scale-wrapper">
+
+        <div class="stat-card stat-sugar">
+          <span class="stat-number">04</span>
+          <span class="stat-label">GRAMS OF SUGAR</span>
+        </div>
+
+        <div class="stat-card stat-probiotic">
+          <span class="stat-number">1B</span>
+          <span class="stat-label">PROBIOTICS</span>
+        </div>
+
+        <div class="stat-card stat-artificial">
+          <span class="stat-number">0</span>
+          <span class="stat-label">ARTIFICIAL INGREDIENTS</span>
+        </div>
+
+        <svg class="connector-defs" aria-hidden="true" width="0" height="0">
+          <defs>
+             </defs>
+        </svg>
+
+        <div class="stat-connectors">
+          <div class="connector connector-sugar">
+            <div class="line-diagonal"></div>
+            <div class="line-horizontal"></div>
+            <span class="connector-joint" aria-hidden="true"></span>
+          </div>
+          <div class="connector connector-probiotic">
+            <div class="line-diagonal"></div>
+            <div class="line-horizontal"></div>
+            <span class="connector-joint" aria-hidden="true"></span>
+          </div>
+          <div class="connector connector-artificial">
+            <div class="line-horizontal"></div>
+            <div class="line-diagonal"></div>
+            <span class="connector-joint" aria-hidden="true"></span>
+          </div>
+        </div>
+
+      </div> </div>
+
+  </div>
+
+  <section class="flavors-section">
+
+    <div class="flavor-heading">
+      <span class="number">5</span>
+      <span>FLAVORS</span>
+    </div>
+
+    <nav class="flavor-picker" aria-label="Choose a flavor" aria-hidden="true">
+      <button type="button" class="flavor-btn" data-flavor="1" aria-pressed="true">Cherry</button>
+      <button type="button" class="flavor-btn" data-flavor="0" aria-pressed="false">Lemon</button>
+      <button type="button" class="flavor-btn" data-flavor="3" aria-pressed="false">Strawberry</button>
+      <button type="button" class="flavor-btn" data-flavor="4" aria-pressed="false">Watermelon</button>
+      <button type="button" class="flavor-btn" data-flavor="2" aria-pressed="false">Grape</button>
+    </nav>
+  </section>
+
+  <section class="final-section">
+    <img src="./src/assets/images/big-text.png" class="final-graphic" alt="Fizzi Final" aria-hidden="true">
+  </section>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
