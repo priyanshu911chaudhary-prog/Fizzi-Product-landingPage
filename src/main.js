@@ -15,6 +15,7 @@ import { createFlavorTransition } from "./sections/flavourSection/flavourAnimati
 import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 /* ══════════════════════════════════════
    LOADING SCREEN
@@ -157,14 +158,26 @@ function applyConnector(key, settings) {
 
 function updateConnectors() {
     const wrapper = document.querySelector('.stats-scale-wrapper');
-    if (!wrapper) return; 
+    if (!wrapper) return;
     
-    // Scale based on both width and height to ensure a perfect fit
-    const scaleX = window.innerWidth / 1920;
-    const scaleY = window.innerHeight / 900;
+    // ── NEW: Disable the shrinking math entirely on mobile ──
+    if (window.innerWidth <= 768) {
+        wrapper.style.transform = "none";
+        wrapper.style.width = "100%";
+        wrapper.style.height = "100%";
+        wrapper.style.top = "0";
+        wrapper.style.left = "0";
+        return; // Exit early, don't calculate the desktop lines
+    }
+
+    // ── Restore the strict 1920x900 grid if returning to desktop ──
+    wrapper.style.width = "1920px";
+    wrapper.style.height = "900px";
+    wrapper.style.top = "50%";
+    wrapper.style.left = "50%";
     
-    // Pick the smaller scale so it never cuts off the edges
-    const scale = Math.min(scaleX, scaleY); 
+    // Scale the entire 1920x900 wrapper to fit the screen
+    const scale = Math.min(window.innerWidth / 1920, 1); 
     
     wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
     
@@ -210,6 +223,13 @@ async function init() {
         lenis.start();
 
         // Now play intro animation — cans will fly in from off-screen
+        // Add scroll indicator fade-in at the end of intro
+        introAnimation.to('.scroll-indicator', {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out"
+        }, "-=0.5");
+
         introAnimation.play();
 
         // Init scroll-based animations
