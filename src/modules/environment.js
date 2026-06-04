@@ -6,7 +6,7 @@ export function setupEnvironment(onProgress) {
     return new Promise((resolve, reject) => {
         const rgbeLoader = new RGBELoader();
         rgbeLoader.load(
-            'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/4k/photo_studio_01_4k.hdr',
+            'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/photo_studio_01_1k.hdr',
             (texture) => {
                 texture.mapping = THREE.EquirectangularReflectionMapping;
                 scene.environment = texture;

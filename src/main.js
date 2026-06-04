@@ -24,21 +24,11 @@ const loader = document.getElementById('loading-screen');
 const progressBar = document.getElementById('loading-progress');
 const progressText = document.getElementById('loading-percent');
 
-let totalProgress = 0;
-const WEIGHT = { textures: 30, environment: 40, model: 30 };
-const progressState = { textures: 0, environment: 0, model: 0 };
-
-function updateProgress(key, value) {
-    progressState[key] = Math.min(value, 1);
-    totalProgress =
-        progressState.textures * WEIGHT.textures +
-        progressState.environment * WEIGHT.environment +
-        progressState.model * WEIGHT.model;
-
-    const pct = Math.round(totalProgress);
+THREE.DefaultLoadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    const pct = Math.round((itemsLoaded / itemsTotal) * 100);
     if (progressBar) progressBar.style.width = `${pct}%`;
     if (progressText) progressText.textContent = `${pct}%`;
-}
+};
 
 function hideLoadingScreen() {
     return new Promise((resolve) => {
@@ -199,24 +189,9 @@ async function init() {
     try {
         // Fire all heavy loading in parallel
         const [tableTextures, , loadedCans] = await Promise.all([
-            loadTextures().then(result => {
-                updateProgress('textures', 1);
-                return result;
-            }),
-
-            setupEnvironment((event) => {
-                if (event.lengthComputable) {
-                    updateProgress('environment', event.loaded / event.total);
-                }
-            }).then(result => {
-                updateProgress('environment', 1);
-                return result;
-            }),
-
-            loadModels(cherryLight).then(result => {
-                updateProgress('model', 1);
-                return result;
-            }),
+            loadTextures(),
+            setupEnvironment(),
+            loadModels(cherryLight),
         ]);
 
         // Create planes AFTER textures are loaded
